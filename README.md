@@ -31,5 +31,6 @@ I am an **Undergraduate ICT Student** and **Software Developer** specializing in
 ---
 
 ### 🔗 Connect With Me
-- 💼 **LinkedIn:** [linkedin.com/in/gayan-madushanka-3991a92b2](https://linkedin.com/in/gayan-madushanka-3991a92b2)
+
+- 💼 **LinkedIn:** [gayan-madushanka-3991a92b2](https://linkedin.com/in/gayan-madushanka-3991a92b2)
 - 📧 **Email:** gayanmadushanka1610@gmail.com
