@@ -30,6 +30,29 @@ I am an **Undergraduate ICT Student** and **Software Developer** specializing in
 
 ---
 
+### ⭐ Featured Star Project
+
+#### 📱 FHSS Connect — University Ecosystem Mobile App
+
+A role-based mobile application engineered for the **Faculty of Humanities and Social Sciences (FHSS) at the University of Sri Jayewardenepura, Sri Lanka** to replace paper-based legacy administrative workflows.
+
+![FHSS Connect App Demo](demo_FHSS_Connect.gif)
+
+##### 🛡️ Core Innovation: Three-Factor Anti-Proxy Verification
+- **Dynamic TOTP Token:** Uses a regenerating 30-second QR token to prevent static copying.
+- **GPS Geofencing:** Validates student coordinates within a 100-meter radius of the designated hall.
+- **Hardware Device ID Locking:** Binds an account to a single device ID to eliminate multi-student proxy logins.
+
+##### 💡 Key Features
+- **Dual Role Workflows:** Dynamic UIs for Students (Timetables, Resource Booking, QR Check-in) and Lecturers (Dynamic Rescheduling, Session Initialization, Live Attendance Rosters).
+- **UI/UX Design:** Card-based layout with deep image optimization, facilities mapping, and a color-coded booking calendar.
+
+**🛠️ Stack:** `React Native`, `Expo`, `Firebase Auth & Firestore`, `Cloudinary`, `Expo Push Notifications`
+
+👉 [**🖥️ View Code Repository**](https://github.com/DMadushanka/unihbooking-Invite)
+
+---
+
 ### 🔗 Connect With Me
 
 - 💼 **LinkedIn:** [gayan-madushanka-3991a92b2](https://linkedin.com/in/gayan-madushanka-3991a92b2)
