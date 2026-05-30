@@ -16,9 +16,10 @@ jobs:
     timeout-minutes: 5
     
     steps:
-      # Step 1: Checkout the repo (v4 is fine, it doesn't cause a warning by itself anymore)
+      # Step 1: Checkout the repo using the latest main branch or absolute Node 24 compatible tag
+      # Changing this to v4.2.2 or v4 pin ensures it fetches the Node 24 updated runner build.
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       # Step 2: Generate the multi-format animations
       - name: Generate GitHub Contribution Snake Animations
@@ -39,7 +40,7 @@ jobs:
             # 4. A high-quality GIF version
             dist/github-snake.gif
 
-      # Step 3: Deploy using v5 (which natively targets Node.js 24)
+      # Step 3: Deploy using v5 (Node 24 native)
       - name: Deploy to Output Branch
         uses: crazy-max/ghaction-github-pages@v5
         with:
