@@ -1,10 +1,10 @@
 <div align="center">
-
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,30:0a1628,60:0d2137,100:1a4a6b&height=280&section=header&text=Gayan%20Madushanka&fontSize=52&fontColor=ffffff&fontAlignY=42&animation=fadeIn&desc=Full-Stack%20Developer%20%7C%20UI%2FUX%20Designer%20%7C%20ICT%20Undergraduate&descAlignY=60&descSize=17&descColor=7ec8e3&stroke=4fc3f7&strokeWidth=1" width="100%"/>
-
+</div>
+<a href="https://github.com/DMadushanka">
+  <img src="https://raw.githubusercontent.com/DMadushanka/DMadushanka/output/profile-frame.svg" width="160" align="right"/>
+</a>
 <br/>
-
-<img src="https://github.com/DMadushanka.png" width="130" height="130" alt="Gayan Madushanka"/>
 
 <br/><br/>
 
