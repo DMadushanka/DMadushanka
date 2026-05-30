@@ -2,8 +2,8 @@ name: Generate Snake Animation
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # Every midnight UTC
-  workflow_dispatch:       # Manual run button in GitHub Actions tab
+    - cron: "0 0 * * *"
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -36,5 +36,9 @@ jobs:
         with:
           target_branch: output
           build_dir: dist
+          fqn: false
+          jekyll: false
+          keep_history: false
+          commit_message: "chore: update snake animation [skip ci]"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
