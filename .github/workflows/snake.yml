@@ -34,6 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python generate_snake.py
+          python generate_frame.py
           echo "Generated files:"
           ls -lh dist/
 
@@ -44,4 +45,4 @@ jobs:
           publish_branch: output
           publish_dir: ./dist
           force_orphan: true
-          commit_message: "chore: update snake animation [skip ci]"
+          commit_message: "chore: update snake and profile frame [skip ci]"
