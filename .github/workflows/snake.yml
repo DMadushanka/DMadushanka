@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,7 +32,10 @@ jobs:
       - name: Generate Snake SVGs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python generate_snake.py
+        run: |
+          python generate_snake.py
+          echo "Generated files:"
+          ls -lh dist/
 
       - name: Deploy to output branch
         uses: crazy-max/ghaction-github-pages@v4
