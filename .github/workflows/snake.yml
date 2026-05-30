@@ -8,6 +8,10 @@ on:
     branches:
       - main # Automatically updates when you push to main
 
+# This silences the noisy deprecation warnings until the action packages officially upgrade
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
+
 jobs:
   generate:
     permissions:
@@ -16,8 +20,7 @@ jobs:
     timeout-minutes: 5
     
     steps:
-      # Step 1: Checkout the repo using the latest main branch or absolute Node 24 compatible tag
-      # Changing this to v4.2.2 or v4 pin ensures it fetches the Node 24 updated runner build.
+      # Step 1: Checkout the repo using the stable build
       - name: Checkout Repository
         uses: actions/checkout@v4.2.2
 
@@ -40,7 +43,7 @@ jobs:
             # 4. A high-quality GIF version
             dist/github-snake.gif
 
-      # Step 3: Deploy using v5 (Node 24 native)
+      # Step 3: Deploy using native Node 24 version
       - name: Deploy to Output Branch
         uses: crazy-max/ghaction-github-pages@v5
         with:
