@@ -8,6 +8,10 @@ on:
     branches:
       - main # Automatically updates when you push to main
 
+# Set the environment variable globally for the entire workflow to silence the warning
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   generate:
     permissions:
@@ -16,7 +20,7 @@ jobs:
     timeout-minutes: 5
     
     steps:
-      # Step 1: Checkout the repo to ensure the runner has proper context
+      # Step 1: Checkout the repo
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -33,10 +37,10 @@ jobs:
             # 2. Premium Custom Palette 2D Animation (Halloween/Orange theme)
             dist/github-snake-custom.svg?color_snake=#ff6b6b&color_dots=#ebedf0,#f9d5bb,#f3a683,#f19066,#cf6a32
             
-            # 3. Heavyweight 3D Isometric Animation (Super impressive!)
+            # 3. Heavyweight 3D Isometric Animation
             dist/ocean-3d.svg?color_snake=#38bdf8&color_dots=#ebedf0,#7dd3fc,#38bdf8,#0284c7,#0369a1&sky_color=#0f172a&theme=ocean
             
-            # 4. A high-quality GIF version (Great for embedding anywhere)
+            # 4. A high-quality GIF version
             dist/github-snake.gif
 
       # Step 3: Deploy the generated files to the 'output' branch
