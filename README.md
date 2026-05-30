@@ -153,13 +153,13 @@ I'm **Gayan Madushanka**, an undergraduate ICT student, designer, and content wr
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=DMadushanka&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=4fc3f7&icon_color=7c4dff&text_color=8892b0&rank_icon=github" width="48%" alt="GitHub Stats"/>
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=DMadushanka&theme=tokyonight&hide_border=true&background=0d1117&ring=4fc3f7&fire=7c4dff&currStreakLabel=4fc3f7" width="48%" alt="GitHub Streak"/>
-
+<div align="center">
+<img src="https://github-readme-stats-seven-nu-35.vercel.app/api?username=DMadushanka&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=4fc3f7&icon_color=7c4dff&text_color=8892b0&rank_icon=github" width="48%" alt="GitHub Stats"/>
+&nbsp;
+<img src="https://streak-stats.demolab.com/?user=DMadushanka&theme=tokyonight&hide_border=true&background=0d1117&ring=4fc3f7&fire=7c4dff&currStreakLabel=4fc3f7" width="48%" alt="GitHub Streak"/>
 <br/><br/>
 
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=DMadushanka&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=4fc3f7&text_color=8892b0&langs_count=8" width="48%" alt="Top Languages"/>
-
+<img src="https://github-readme-stats-seven-nu-35.vercel.app/api/top-langs/?username=DMadushanka&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=4fc3f7&text_color=8892b0&langs_count=8" width="48%" alt="Top Languages"/>
 </div>
 
 ---
