@@ -19,12 +19,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4.2.2
 
-      # Step 2: Provision clean Python environment
+      # Step 2: Provision clean Python environment (Cache removed to fix the error)
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
 
       # Step 3: Install necessary web requests framework
       - name: Install Dependencies
