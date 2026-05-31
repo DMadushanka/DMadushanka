@@ -159,10 +159,12 @@ def make_svg(weeks, dark=True):
     bg_col    = "#0d1117" if dark else "#ffffff"
     empty_col = "#161b22" if dark else "#ebedf0"
 
-    # ── Timing ──────────────────────────────────────────────
+    # ── Timing & Slithering ─────────────────────────────────
     MS_PER_CELL = 100          # ms to traverse one cell
     BODY_LENGTH = 12           # number of body segments (excluding head)
     total_ms    = total_cells * MS_PER_CELL
+    WAVELENGTH  = 10           # slither wavelength in grid cells
+    SLITHER_DUR = WAVELENGTH * MS_PER_CELL  # 1000 ms wave period
 
     path_d = build_path_d(snake_path)
 
@@ -170,14 +172,28 @@ def make_svg(weeks, dark=True):
     path_index = {pos: i for i, pos in enumerate(snake_path)}
     cell_map   = {(c, r): (cnt, col) for c, r, cnt, col in cells}
 
-    # ── Colours ─────────────────────────────────────────────
-    HEAD_COLOR = "#3fb950"
-    HEAD_SHEEN = "#57e265"
-    BODY_A     = "#2ea043"
-    BODY_B     = "#238636"
+    # ── Colors & Theme Definitions ──────────────────────────
+    if dark:
+        HEAD_GRAD_START = "#57e265"
+        HEAD_GRAD_END   = "#2ea043"
+        BODY_GRAD_A_START = "#39d353"
+        BODY_GRAD_A_END   = "#26a641"
+        BODY_GRAD_B_START = "#26a641"
+        BODY_GRAD_B_END   = "#0e4429"
+        DORSAL_SCALE    = "#a2e155"  # Neon lime-yellow
+        EYE_PUPIL       = "#0d1117"
+    else:
+        HEAD_GRAD_START = "#40c463"
+        HEAD_GRAD_END   = "#216e39"
+        BODY_GRAD_A_START = "#40c463"
+        BODY_GRAD_A_END   = "#30a14e"
+        BODY_GRAD_B_START = "#30a14e"
+        BODY_GRAD_B_END   = "#216e39"
+        DORSAL_SCALE    = "#9be9a8"  # Soft mint green
+        EYE_PUPIL       = "#24292f"
+
     TONGUE_COL = "#f85149"
     EYE_WHITE  = "#ffffff"
-    EYE_PUPIL  = "#0d1117" if dark else "#24292f"
 
     lines = []
     L = lines.append   # shorthand
@@ -189,21 +205,53 @@ def make_svg(weeks, dark=True):
     # ── Defs ────────────────────────────────────────────────
     L("<defs>")
     L(f'  <path id="sp" d="{path_d}" fill="none"/>')
-    L("""  <style>
-    @keyframes tongue-flick {
-      0%,50%,100% { transform: scaleX(0); opacity: 0; }
-      60%,88%     { transform: scaleX(1); opacity: 1; }
-    }
-    .tongue {
+    L(f'  <linearGradient id="head-grad" x1="100%" y1="50%" x2="0%" y2="50%">')
+    L(f'    <stop offset="0%" stop-color="{HEAD_GRAD_START}"/>')
+    L(f'    <stop offset="100%" stop-color="{HEAD_GRAD_END}"/>')
+    L(f'  </linearGradient>')
+    L(f'  <linearGradient id="body-grad-a" x1="80%" y1="20%" x2="20%" y2="80%">')
+    L(f'    <stop offset="0%" stop-color="{BODY_GRAD_A_START}"/>')
+    L(f'    <stop offset="40%" stop-color="{BODY_GRAD_A_START}"/>')
+    L(f'    <stop offset="100%" stop-color="{BODY_GRAD_A_END}"/>')
+    L(f'  </linearGradient>')
+    L(f'  <linearGradient id="body-grad-b" x1="80%" y1="20%" x2="20%" y2="80%">')
+    L(f'    <stop offset="0%" stop-color="{BODY_GRAD_B_START}"/>')
+    L(f'    <stop offset="40%" stop-color="{BODY_GRAD_B_START}"/>')
+    L(f'    <stop offset="100%" stop-color="{BODY_GRAD_B_END}"/>')
+    L(f'  </linearGradient>')
+    L( '  <radialGradient id="gloss-grad" cx="35%" cy="35%" r="40%">')
+    L( '    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5"/>')
+    L( '    <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>')
+    L( '  </radialGradient>')
+    L(f"""  <style>
+    @keyframes slither {{
+      0% {{ transform: translateY(calc(-1 * var(--amp, 1.8px))) rotate(0deg); }}
+      25% {{ transform: translateY(0px) rotate(var(--rot, 6deg)); }}
+      50% {{ transform: translateY(var(--amp, 1.8px)) rotate(0deg); }}
+      75% {{ transform: translateY(0px) rotate(calc(-1 * var(--rot, 6deg))); }}
+      100% {{ transform: translateY(calc(-1 * var(--amp, 1.8px))) rotate(0deg); }}
+    }}
+    .slither-wrap {{
+      animation: slither {SLITHER_DUR}ms ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }}
+    @keyframes tongue-flick {{
+      0%, 40%, 80%, 100% {{ transform: scaleX(0); opacity: 0; }}
+      45%, 55%, 65%, 75% {{ transform: scaleX(1); opacity: 1; }}
+      50%, 70% {{ transform: scaleX(0.8) rotate(6deg); }}
+      60% {{ transform: scaleX(0.8) rotate(-6deg); }}
+    }}
+    .tongue {{
       animation: tongue-flick 2.5s ease-in-out infinite;
       transform-box: fill-box;
       transform-origin: left center;
-    }
-    @keyframes blink {
-      0%,93%,100% { transform: scaleY(1); }
-      96%         { transform: scaleY(0.08); }
-    }
-    .eye { animation: blink 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    }}
+    @keyframes blink {{
+      0%,93%,100% {{ transform: scaleY(1); }}
+      96%         {{ transform: scaleY(0.08); }}
+    }}
+    .eye {{ animation: blink 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }}
   </style>""")
     L("</defs>")
 
@@ -251,114 +299,97 @@ def make_svg(weeks, dark=True):
             L(f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" '
               f'rx="{RADIUS}" fill="{fill}"/>')
 
-    # ── Helper: wrap an SVG element with animateMotion ──────
-    #
-    # CRITICAL: We do NOT use transform="translate(-half,-half)" as a static
-    # attribute because animateMotion REPLACES the element's position (it sets
-    # the supplemental transformation matrix). Instead, we apply the centering
-    # offset through a child animateTransform with additive="sum".
-    #
-    half = CELL // 2
-
-    def motion_elem(tag_open, tag_close, lag):
-        """Wrap an element so it travels along the snake path, centered on each cell."""
+    # ── Helper: wrap an SVG element with slither and motion ─
+    def draw_segment(content, lag):
+        """
+        Draw a segment by wrapping it in an outer group that follows the motion path,
+        and an inner group that applies the slithering animation.
+        """
+        import math
+        # Calculate lag-specific phase shift for slither wave
+        delay_ms = -lag * MS_PER_CELL
+        
+        # Calculate t from 0 (head) to 1.0 (tail)
+        t = lag / BODY_LENGTH if BODY_LENGTH > 0 else 0
+        
+        # Sinuous amplitude profile: head is 0.6px, midbody is 2.0px, tail is 0.6px
+        amp = round(0.6 + 1.4 * math.sin(t * math.pi), 2)
+        rot = round(amp * 3.5, 2)
+        
         am = anim_motion_segment(lag, total_cells, total_ms)
-        # additive="sum" centering offset so element is centred on the path point
-        at = (f'<animateTransform attributeName="transform" type="translate" '
-              f'additive="sum" from="-{half} -{half}" to="-{half} -{half}" dur="1s"/>')
-        return f"{tag_open}{am}{at}{tag_close}"
-
-    def motion_elem_offset(tag_open, tag_close, lag, dx, dy):
-        """Like motion_elem but with an additional local offset (for eyes, tongue)."""
-        am = anim_motion_segment(lag, total_cells, total_ms)
-        # Combine centering + local offset in one animateTransform
-        ox, oy = -half + dx, -half + dy
-        at = (f'<animateTransform attributeName="transform" type="translate" '
-              f'additive="sum" from="{ox} {oy}" to="{ox} {oy}" dur="1s"/>')
-        return f"{tag_open}{am}{at}{tag_close}"
+        
+        return (
+            f'<g>\n'
+            f'  {am}\n'
+            f'  <g class="slither-wrap" style="--amp: {amp}px; --rot: {rot}deg; animation-delay: {delay_ms}ms;">\n'
+            f'    {content}\n'
+            f'  </g>\n'
+            f'</g>'
+        )
 
     # ── Body segments (tail first → head on top) ─────────────
     for seg in range(BODY_LENGTH, 0, -1):
         t      = seg / BODY_LENGTH
         scale  = 1.0 - t * 0.36
-        rx_    = round((CELL / 2 + 0.5) * scale, 2)
-        ry_    = round((CELL / 2 - 0.5) * scale, 2)
-        fill   = BODY_A if seg % 2 == 0 else BODY_B
+        rx_    = round((CELL / 2 + 1.2) * scale, 2)
+        ry_    = round((CELL / 2 + 0.3) * scale, 2)
+        fill   = "url(#body-grad-a)" if seg % 2 == 0 else "url(#body-grad-b)"
         opac   = round(1.0 - t * 0.22, 2)
 
+        if seg == BODY_LENGTH:
+            # Custom tapering pointy tail tip
+            tx_start = round(rx_, 2)
+            ty_start = round(ry_ * 0.8, 2)
+            tip_x = round(-rx_ * 1.4, 2)
+            tail_path = f"M {tx_start},-{ty_start} C {tx_start*0.4},-{ty_start} -{tx_start*0.4},-{ty_start*0.4} {tip_x},0 C -{tx_start*0.4},{ty_start*0.4} {tx_start*0.4},{ty_start} {tx_start},{ty_start} Z"
+            content = f'<path d="{tail_path}" fill="{fill}"/>'
+        else:
+            # Regular segment shape
+            content = f'<ellipse rx="{rx_}" ry="{ry_}" fill="{fill}"/>'
+
+        # Add dorsal scale diamond (on non-tip segments, or if scale > 0.4)
+        if seg < BODY_LENGTH and scale > 0.4:
+            ds_rx = round(rx_ * 0.45, 2)
+            ds_ry = round(ry_ * 0.28, 2)
+            dorsal_path = f"M -{ds_rx},0 L 0,-{ds_ry} L {ds_rx},0 L 0,{ds_ry} Z"
+            content += f'\n    <path d="{dorsal_path}" fill="{DORSAL_SCALE}" opacity="0.65"/>'
+            
+        # Add 3D radial gloss highlight
+        sheen_rx = round(rx_ * 0.6, 2)
+        sheen_ry = round(ry_ * 0.45, 2)
+        content += f'\n    <ellipse cx="-{rx_*0.2:.1f}" cy="-{ry_*0.2:.1f}" rx="{sheen_rx}" ry="{sheen_ry}" fill="url(#gloss-grad)"/>'
+
         L(f'<g opacity="{opac}">')
-        L(motion_elem(
-            f'<ellipse rx="{rx_}" ry="{ry_}" fill="{fill}">',
-            '</ellipse>',
-            seg
-        ))
-
-        # Scale-pattern dots every 3rd segment
-        if seg % 3 == 0 and scale > 0.68:
-            srx = round(rx_ * 0.50, 2)
-            sry = round(ry_ * 0.34, 2)
-            alt = BODY_B if seg % 2 == 0 else BODY_A
-            L(motion_elem(
-                f'<ellipse rx="{srx}" ry="{sry}" fill="{alt}" opacity="0.42">',
-                '</ellipse>',
-                seg
-            ))
-
+        L(draw_segment(content, seg))
         L('</g>')
 
-    # ── Head (two-layer for 3-D dome look) ───────────────────
-    hd = CELL / 2
-    L(motion_elem(
-        f'<ellipse rx="{hd + 1.5}" ry="{hd + 0.5}" fill="{HEAD_COLOR}">',
-        '</ellipse>', 0
-    ))
-    L(motion_elem(
-        f'<ellipse rx="{hd + 0.7}" ry="{hd - 0.6}" fill="{HEAD_SHEEN}" opacity="0.5">',
-        '</ellipse>', 0
-    ))
+    # ── Head (Viper head & advanced details) ────────────────
+    head_content = f"""<!-- Viper head shape -->
+    <path d="M -6.5,-2.5 C -6.0,-4.8 -4.5,-6.0 -1.0,-6.2 C 3.2,-6.5 5.8,-3.5 7.8,-1.0 C 8.3,-0.5 8.3,0.5 7.8,1.0 C 5.8,3.5 3.2,6.5 -1.0,6.2 C -4.5,6.0 -6.0,4.8 -6.5,2.5 Z" fill="url(#head-grad)"/>
+    <!-- Glossy dome highlight -->
+    <ellipse cx="-2.0" cy="-2.0" rx="6.5" ry="4.5" fill="url(#gloss-grad)"/>
+    <!-- Brow ridges -->
+    <path d="M 1.0,4.2 C 2.2,4.6 3.8,4.2 4.4,3.2" stroke="{DORSAL_SCALE}" stroke-width="0.8" fill="none" opacity="0.8"/>
+    <path d="M 1.0,-4.2 C 2.2,-4.6 3.8,-4.2 4.4,-3.2" stroke="{DORSAL_SCALE}" stroke-width="0.8" fill="none" opacity="0.8"/>
+    <!-- Eyes with blink animation -->
+    <g class="eye">
+      <ellipse cx="2.5" cy="3.2" rx="2.0" ry="2.0" fill="{EYE_WHITE}"/>
+      <ellipse cx="2.5" cy="-3.2" rx="2.0" ry="2.0" fill="{EYE_WHITE}"/>
+    </g>
+    <!-- Reptilian slit pupils -->
+    <ellipse cx="2.8" cy="3.2" rx="0.5" ry="1.4" fill="{EYE_PUPIL}"/>
+    <ellipse cx="2.8" cy="-3.2" rx="0.5" ry="1.4" fill="{EYE_PUPIL}"/>
+    <!-- Nostrils -->
+    <circle cx="6.5" cy="0.9" r="0.4" fill="{EYE_PUPIL}" opacity="0.6"/>
+    <circle cx="6.5" cy="-0.9" r="0.4" fill="{EYE_PUPIL}" opacity="0.6"/>
+    <!-- Tongue flick -->
+    <g class="tongue">
+      <line x1="7.8" y1="0" x2="12.3" y2="0" stroke="{TONGUE_COL}" stroke-width="1.3" stroke-linecap="round"/>
+      <line x1="12.3" y1="0" x2="15.8" y2="-2.0" stroke="{TONGUE_COL}" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="12.3" y1="0" x2="15.8" y2="2.0" stroke="{TONGUE_COL}" stroke-width="1.2" stroke-linecap="round"/>
+    </g>"""
 
-    # ── Eyes ─────────────────────────────────────────────────
-    # Eyes sit forward on the head (+3 px along motion direction)
-    # and to each side (±2.6 px lateral)
-    EFX = 3.0    # forward offset along direction of travel
-    ESY = 2.6    # lateral offset
-
-    for side in (-1, 1):
-        # white sclera with blink animation
-        L(f'<g class="eye">')
-        L(motion_elem_offset(
-            f'<circle r="2.0" fill="{EYE_WHITE}">',
-            '</circle>', 0, EFX, side * ESY
-        ))
-        L('</g>')
-        # pupil (slightly more forward so it looks like it's looking ahead)
-        L(motion_elem_offset(
-            f'<circle r="1.0" fill="{EYE_PUPIL}">',
-            '</circle>', 0, EFX + 0.5, side * ESY
-        ))
-
-    # ── Tongue ───────────────────────────────────────────────
-    # Tongue root is ahead of the head nose, forked at the tip.
-    # The whole group has CSS tongue-flick animation (scaleX 0→1→0).
-    # transform-origin is left center of the group so it flicks outward.
-    tx0 = half + 2.0    # root x in local (head-centered) space
-    L(f'<g class="tongue">')
-    L(motion_elem_offset(
-        f'<line x1="{tx0:.1f}" y1="0" x2="{tx0 + 4:.1f}" y2="0" '
-        f'stroke="{TONGUE_COL}" stroke-width="1.3" stroke-linecap="round">',
-        '</line>', 0, 0, 0
-    ))
-    L(motion_elem_offset(
-        f'<line x1="{tx0 + 4:.1f}" y1="0" x2="{tx0 + 7:.1f}" y2="-2.2" '
-        f'stroke="{TONGUE_COL}" stroke-width="1.2" stroke-linecap="round">',
-        '</line>', 0, 0, 0
-    ))
-    L(motion_elem_offset(
-        f'<line x1="{tx0 + 4:.1f}" y1="0" x2="{tx0 + 7:.1f}" y2="2.2" '
-        f'stroke="{TONGUE_COL}" stroke-width="1.2" stroke-linecap="round">',
-        '</line>', 0, 0, 0
-    ))
-    L('</g>')
+    L(draw_segment(head_content, 0))
 
     L('</svg>')
     return "\n".join(lines)
