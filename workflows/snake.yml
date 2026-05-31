@@ -47,4 +47,4 @@ jobs:
           publish_branch: output
           publish_dir: ./dist
           force_orphan: true
-          commit_message: "chore: update snake and profile frame [skip ci]"
+          commit_message: "chore: update all digitized cybernetic assets [skip ci]"
