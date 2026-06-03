@@ -94,8 +94,14 @@ I'm **Gayan Madushanka**, an undergraduate ICT student, designer, and content wr
 
 <div align="center">
   <img src="https://github-readme-stats-seven-nu-35.vercel.app/api?username=DMadushanka&show_icons=true&title_color=00f2fe&icon_color=ff00de&text_color=8892b0&bg_color=0d1117&hide_border=true&rank_icon=github" height="195" alt="GitHub Stats"/>
-  &nbsp;&nbsp;
-  <img src="https://streak-stats.demolab.com/?user=DMadushanka&background=0d1117&ring=00f2fe&fire=ff00de&currStreakLabel=00f2fe&sideLabels=8892b0&currStreakNum=ffffff&hide_border=true" height="195" alt="GitHub Streak"/>
+  
+  <br/><br/>
+
+  <!-- High-Availability Metric Badges acting as a clean summary grid -->
+  <img src="https://img.shields.io/badge/🔥_CONTRIBUTION_STREAK-ACTIVE-ff00de?style=for-the-badge&logo=gitkraken" height="30"/>&nbsp;
+  <img src="https://img.shields.io/badge/💻_CURRENT_FOCUS-GAMEBADU.LK-00f2fe?style=for-the-badge" height="30"/>&nbsp;
+  <img src="https://img.shields.io/badge/🎓_ALIGNED_WITH-FHSS_Connect-7c4dff?style=for-the-badge" height="30"/>
+
   <br/><br/>
   <img src="https://github-readme-stats-seven-nu-35.vercel.app/api/top-langs/?username=DMadushanka&layout=compact&title_color=00f2fe&text_color=8892b0&bg_color=0d1117&hide_border=true&langs_count=8" height="165" alt="Top Languages"/>
 </div>
