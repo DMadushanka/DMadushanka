@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="30" viewBox="0 0 800 30">
+<defs>
+  <!-- Sleek neon horizontal linear gradient -->
+  <linearGradient id="div-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#0d1117" stop-opacity="0"/>
+    <stop offset="25%" stop-color="#00f2fe" stop-opacity="0.3"/>
+    <stop offset="50%" stop-color="#7c4dff" stop-opacity="1"/>
+    <stop offset="75%" stop-color="#ff00de" stop-opacity="0.3"/>
+    <stop offset="100%" stop-color="#0d1117" stop-opacity="0"/>
+  </linearGradient>
+
+  <!-- Neon glow filter -->
+  <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur stdDeviation="1.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+
+  <!-- Spark rising animations -->
+  <style>
+    @keyframes rise-spark {
+      0% { transform: translateY(18px) translateX(0); opacity: 0; }
+      15% { opacity: 0.8; }
+      85% { opacity: 0.8; }
+      100% { transform: translateY(-5px) translateX(var(--drift, 4px)); opacity: 0; }
+    }
+    .spark {
+      animation: rise-spark 4s ease-in-out infinite;
+      fill: #00f2fe;
+      filter: url(#neon-glow);
+    }
+    .spark-pink {
+      animation: rise-spark 5s ease-in-out infinite;
+      fill: #ff00de;
+      filter: url(#neon-glow);
+    }
+  </style>
+</defs>
+
+<!-- Outer track baseline (fading transparently at ends) -->
+<path d="M 50,15 L 750,15" fill="none" stroke="url(#div-grad)" stroke-width="1.5"/>
+
+<!-- High-intensity laser core wire -->
+<path d="M 250,15 L 550,15" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.6" stroke-dasharray="150 10 30 10"/>
+
+<!-- Moving Data Packets -->
+<!-- Packet 1: Cyan travelling Left to Right -->
+<circle r="2.2" fill="#00ffcc" filter="url(#neon-glow)">
+  <animateMotion dur="4.2s" repeatCount="indefinite" path="M 120,15 L 680,15"/>
+</circle>
+
+<!-- Packet 2: Pink travelling Right to Left -->
+<circle r="1.8" fill="#ff00de" filter="url(#neon-glow)">
+  <animateMotion dur="5.5s" repeatCount="indefinite" path="M 680,15 L 120,15"/>
+</circle>
+
+<!-- Central Telemetry Anchor Core -->
+<g transform="translate(0,0)">
+  <!-- Bezel circles -->
+  <circle cx="400" cy="15" r="5" fill="#0d1117" stroke="#00f2fe" stroke-width="1" filter="url(#neon-glow)"/>
+  <circle cx="400" cy="15" r="2" fill="#ff00de"/>
+  
+  <!-- Technical sub-lines -->
+  <line x1="384" y1="15" x2="390" y2="15" stroke="#00f2fe" stroke-width="0.8" opacity="0.6"/>
+  <line x1="410" y1="15" x2="416" y2="15" stroke="#00f2fe" stroke-width="0.8" opacity="0.6"/>
+  
+  <line x1="387" y1="12" x2="387" y2="18" stroke="#7c4dff" stroke-width="0.8" opacity="0.6"/>
+  <line x1="413" y1="12" x2="413" y2="18" stroke="#7c4dff" stroke-width="0.8" opacity="0.6"/>
+</g>
+
+<!-- Antigravity Sparks rising from center (organic staggered offsets) -->
+<g class="spark" style="animation-delay: 0s; --drift: 6px;">
+  <circle cx="370" cy="0" r="0.8"/>
+</g>
+<g class="spark-pink" style="animation-delay: -1.5s; --drift: -5px;">
+  <circle cx="385" cy="0" r="1.0"/>
+</g>
+<g class="spark" style="animation-delay: -3s; --drift: 4px;">
+  <circle cx="415" cy="0" r="0.8"/>
+</g>
+<g class="spark-pink" style="animation-delay: -0.8s; --drift: -7px;">
+  <circle cx="430" cy="0" r="1.2"/>
+</g>
+
+</svg>
